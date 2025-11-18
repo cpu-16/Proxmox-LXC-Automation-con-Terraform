@@ -48,7 +48,7 @@ Este proyecto automatiza la gestión de contenedores LXC en **Proxmox VE 9.0.11*
   - `debian-12-standard_12.7-1_amd64.tar.zst`
   - `ubuntu-25.04-standard_25.04-1.1_amd64.tar.zst`
 
-  ![Templates LXC en Proxmox](images/templates-lxc.png)
+  ![Templates LXC en Proxmox](images/templates.png)
 
 - ✅ **Bridge de red** configurado (`vmbr0` con DHCP)
 
@@ -71,7 +71,7 @@ Este proyecto automatiza la gestión de contenedores LXC en **Proxmox VE 9.0.11*
    - **Password:** Una contraseña fuerte
    - **Enabled:** ✅ Marcado
 
-![Crear Usuario Terraform](images/crear-usuario.png)
+![Crear Usuario Terraform](images/usuario.png)
 
 > 💡 **Nota:** Usamos el realm `pve` (no Linux PAM) para un usuario nativo de Proxmox.
 
@@ -84,7 +84,7 @@ Este proyecto automatiza la gestión de contenedores LXC en **Proxmox VE 9.0.11*
    - **Privilege Separation:** `No` (hereda permisos del usuario)
    - **Expire:** `never` (para laboratorio)
 
-![Crear Token API](images/crear-token.png)
+![Crear Token API](images/token.png)
 
 3. **¡IMPORTANTE!** Copia el **Secret** mostrado (solo se muestra una vez)
 
@@ -92,8 +92,6 @@ Este proyecto automatiza la gestión de contenedores LXC en **Proxmox VE 9.0.11*
 Token ID: terraform@pve!terraform1
 Secret: 73cdccb3-d2b2-4fa0-879e-b1c7da3b6ya8
 ```
-
-![Secret del Token](images/token-secret.png)
 
 ### 3️⃣ Asignar Permisos
 
@@ -104,7 +102,7 @@ Secret: 73cdccb3-d2b2-4fa0-879e-b1c7da3b6ya8
    - **Role:** `Administrator`
    - **Propagate:** ✅ Marcado
 
-![Asignar Permisos](images/asignar-permisos.png)
+![Asignar Permisos](images/permiso.png)
 
 ---
 
@@ -264,12 +262,12 @@ variable "lxc_count" {
 
 ```hcl
 pm_api_url          = "https://10.3.33.53:8006/api2/json"
-# O usando FQDN: "https://pve.ciberpty.com/api2/json"
+# O usando FQDN: "https://ejemplo.com/api2/json"
 
 pm_api_token_id     = "terraform@pve!terraform1"
 pm_api_token_secret = "AQUI_VA_EL_SECRET_REAL_DEL_TOKEN"
 
-node_name    = "ciber"
+node_name    = "pve"
 lxc_password = "Letmein1$"
 ```
 
@@ -302,7 +300,7 @@ terraform init
 
 Esto descarga el provider `telmate/proxmox` versión `3.0.2-rc04`.
 
-![Terraform Init](images/terraform-init.png)
+![Terraform Init](images/init.png)
 
 ### 2️⃣ Formatear Código (Opcional)
 
@@ -328,7 +326,7 @@ terraform plan
 Plan: 5 to add, 0 to change, 0 to destroy.
 ```
 
-![Terraform Plan](images/terraform-plan.png)
+![Terraform Plan](images/plan.png)
 
 ### 5️⃣ Crear Contenedores
 
@@ -338,7 +336,7 @@ terraform apply
 
 Escribe `yes` para confirmar. Terraform creará 5 contenedores LXC (VMID 2000-2004).
 
-![Terraform Apply](images/terraform-apply.png)
+![Terraform Apply](images/apply.png)
 
 ### 6️⃣ Verificar en Proxmox
 
@@ -350,7 +348,7 @@ En la GUI de Proxmox verás:
 - **CT 2003** → `LXC-test-4`
 - **CT 2004** → `LXC-test-5`
 
-![Contenedores Creados en Proxmox](images/lxc-creados.png)
+![Contenedores Creados en Proxmox](images/creados.png)
 
 ### 7️⃣ Destruir Contenedores
 
@@ -360,7 +358,7 @@ terraform destroy
 
 Confirma con `yes` para eliminar todos los contenedores.
 
-![Terraform Destroy](images/terraform-destroy.png)
+![Terraform Destroy](images/destroy.png)
 
 #### Destruir un Contenedor Específico
 
